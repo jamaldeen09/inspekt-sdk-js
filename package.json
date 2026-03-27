@@ -1,0 +1,26 @@
+{
+  "name": "inspekt-sdk",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  },
+  "keywords": [],
+  "author": "jamaldeen.o",
+  "license": "MIT"
+}
