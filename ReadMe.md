@@ -33,7 +33,8 @@ Get your API key from your [Inspekt Dashboard](LINK_COMING_SOON).
 
 ```typescript
 import express from 'express';
-import { Inspekt, inspektExpress } from 'inspekt-sdk-js';
+import { Inspekt } from "inspekt-sdk-js"
+import inspektExpress from "insekt-sdk-js/adapters/express.js"
 
 const app = express();
 
@@ -58,7 +59,8 @@ app.listen(3000);
 // main.ts
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Inspekt, InspektInterceptor } from 'inspekt-sdk-js';
+import { Inspekt } from "inspekt-sdk-js"
+import InspektInterceptor  from "insekt-sdk-js/adapters/nest.js"
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -80,7 +82,8 @@ bootstrap();
 
 ```typescript
 import Fastify from 'fastify';
-import { Inspekt, inspektFastify } from 'inspekt-sdk-js';
+import { Inspekt } from "inspekt-sdk-js"
+import inspektFastify  from "insekt-sdk-js/adapters/fastify.js"
 
 const fastify = Fastify();
 
