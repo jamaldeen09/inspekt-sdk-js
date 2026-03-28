@@ -111,7 +111,6 @@ const inspekt = new Inspekt({
     apiKey: 'ins_live_your_key_here', // Required
     analysisMode: 'errors',           // Optional — default: 'errors'
     redactKeys: ['x-internal-token'], // Optional — keys to redact
-    env: 'production',                // Optional — default: NODE_ENV
     terminalOutput: true,             // Optional — default: true
 });
 ```
@@ -123,7 +122,6 @@ const inspekt = new Inspekt({
 | `apiKey` | `string` | — | **Required.** Your Inspekt API key. Must start with `ins_live_` |
 | `analysisMode` | `'errors' \| 'always' \| 'never'` | `'errors'` | Controls when AI analysis runs. `errors` = 4xx/5xx only. `always` = every request (expensive). `never` = disable analysis |
 | `redactKeys` | `string[]` | `['authorization']` | Header/body keys to redact before sending to AI. Sensitive keys are replaced with `[REDACTED]` |
-| `env` | `string` | `process.env.NODE_ENV` | Environment label shown in logs e.g. `'production'`, `'staging'` |
 | `terminalOutput` | `boolean` | `true` | Toggle terminal output on or off |
 
 ---
