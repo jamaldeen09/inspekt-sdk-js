@@ -1,5 +1,5 @@
 {
-  "name": "inspekt-sdk",
+  "name": "inspekt-js",
   "version": "0.0.1",
   "description": "AI-powered API monitoring and diagnostics. Drop-in middleware for Express, NestJS, and Fastify that logs structured analysis directly to your terminal.",
   "main": "./dist/index.js",
