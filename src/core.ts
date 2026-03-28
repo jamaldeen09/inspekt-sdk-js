@@ -93,44 +93,45 @@ class Inspekt {
         const cyan = '\x1b[36m';
         const inverse = '\x1b[7m';
         const timestamp = new Date().toLocaleTimeString();
+        const path = req.originalUrl || req.url || '/';
 
-        console.log(`\n${inverse}${bold} ${req.method} ${req.originalUrl} ${reset} ${dim}${timestamp}${reset}`);
+        console.log(`\n${inverse}${bold} ${req.method} ${path} ${reset} ${dim}${timestamp}${reset}`);
         console.log(`\n${bold}${cyan}INSPEKT${reset} ${dim}─────────────────────────────────────────${reset} ${severityColor}${bold}${severity}${reset}`);
-        
+
         // Summary + Status
         console.log(`\n${bold}${analysis.summary}${reset}`);
         console.log(`${dim}${analysis.status.code} · ${analysis.status.meaning}${reset}`);
-    
+
         // Diagnosis
         console.log(`\n${bold}Diagnosis${reset}`);
         console.log(`  ${analysis.diagnosis}`);
-    
+
         // Issues
         if (analysis.issues?.length > 0) {
             console.log(`\n${bold}Issues${reset}`);
             analysis.issues.forEach((i: string) => console.log(`  \x1b[33m·\x1b[0m ${i}`));
         }
-    
+
         // Security & Headers
         if (analysis.headers?.security_flags?.length > 0 || analysis.headers?.missing?.length > 0) {
             console.log(`\n${bold}Security & Headers${reset}`);
             analysis.headers.security_flags?.forEach((f: string) => console.log(`  \x1b[31m· FLAG\x1b[0m ${f}`));
             analysis.headers.missing?.forEach((m: string) => console.log(`  \x1b[33m· MISSING\x1b[0m ${m}`));
         }
-    
+
         // Body & Performance
         if (analysis.body?.anomalies?.length > 0 || analysis.performance_flags?.length > 0) {
             console.log(`\n${bold}Performance & Body${reset}`);
             analysis.body?.anomalies?.forEach((a: string) => console.log(`  \x1b[36m· BODY\x1b[0m ${a}`));
             analysis.performance_flags?.forEach((p: string) => console.log(`  \x1b[36m· PERF\x1b[0m ${p}`));
         }
-    
+
         // Fixes
         if (analysis.fixes?.length > 0) {
             console.log(`\n${bold}Fixes${reset}`);
             analysis.fixes.forEach((f: string) => console.log(`  \x1b[32m·\x1b[0m ${f}`));
         }
-    
+
         console.log(`\n${dim}─────────────────────────────────────────────────────${reset}\n`);
     }
 
@@ -204,8 +205,15 @@ class Inspekt {
      * @public
      */
     public async backgroundAnalysis(req: any, res: any, body: any) {
+        // ---- Build the url ------------
+        const host = req?.headers?.host || req?.get?.('host') || 'localhost';
+        const protocol = (req as any).protocol || 'http';
+        const path = req?.originalUrl || req?.url || '/';
+        const url = `${protocol}://${host}${path}`;
+
+        // --- Response ----------------
         const response = await this.analyze({
-            url: `${req?.protocol}://${req?.get('host')}${req?.originalUrl}`,
+            url,
             method: req?.method as any,
             status: res?.statusCode,
             headers: req?.headers,
@@ -216,9 +224,8 @@ class Inspekt {
         if (!response) return;
 
         // Successful AI processing
-        if (response.data && response.data?.data?.analysis) {
+        if (response.data && response.data?.data?.analysis) 
             this.logAnalysis(response.data?.data?.analysis, req);
-        }
 
         // Case where server received the request but skipped analysis (e.g., out of credits)
         else if (response.status === 200 && !response.data?.data?.analysis)
