@@ -19,7 +19,7 @@ Your users never feel it. You never miss an error.
 ## Installation
 
 ```bash
-npm install inspekt-sdk-js
+npm install @inspekt/js
 ```
 
 **Note**: For NestJS or Fastify support, ensure you have @nestjs/common or fastify installed in your project.
@@ -29,17 +29,34 @@ npm install inspekt-sdk-js
 
 Get your API key from your [Inspekt Dashboard](LINK_COMING_SOON).
 
-### Express
+## Usage
+**ES Modules (TypeScript/Modern JS):**
+```javascript
+import { Inspekt } from '@inspekt/js'
+import inspektExpress from "@inspekt/js/express"
+import InspektInterceptor from "@inspekt/js/nest"
+import inspektFastify from "@inspekt/js/fastify"
+```
+
+**CommonJS (TypeScript/Modern JS):**
+```javascript
+const { Inspekt } = require('@inspekt/js');
+const inspektExpress = require("@inspekt/js/express").default;
+const InspektInterceptor = require("@inspekt/js/nest").default;
+const inspektFastify = require("@inspekt/js/fastify").default;
+```
+
+### Express 
 
 ```typescript
 import express from 'express';
-import { Inspekt } from "inspekt-sdk-js"
-import inspektExpress from "insekt-sdk-js/adapters/express.js"
+import { Inspekt } from "@inspekt/js"
+import inspektExpress from "@inspekt/js/express.js"
 
 const app = express();
 
 const inspekt = new Inspekt({
-    apiKey: 'ins_live_your_key_here',
+    apiKey: 'your_key_here',
     analysisMode: 'errors', // only analyze 4xx and 5xx responses
 });
 
@@ -60,13 +77,13 @@ app.listen(3000);
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Inspekt } from "inspekt-sdk-js"
-import InspektInterceptor  from "insekt-sdk-js/adapters/nest.js"
+import InspektInterceptor from "@inspekt/js/nest.js"
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     const inspekt = new Inspekt({
-        apiKey: 'ins_live_your_key_here',
+        apiKey: 'your_key_here',
         analysisMode: 'errors',
     });
 
@@ -83,12 +100,12 @@ bootstrap();
 ```typescript
 import Fastify from 'fastify';
 import { Inspekt } from "inspekt-sdk-js"
-import inspektFastify  from "insekt-sdk-js/adapters/fastify.js"
+import inspektFastify from "@inspekt/js/fastify.js"
 
 const fastify = Fastify();
 
 const inspekt = new Inspekt({
-    apiKey: 'ins_live_your_key_here',
+    apiKey: 'your_key_here',
     analysisMode: 'errors',
 });
 
@@ -108,7 +125,7 @@ fastify.listen({ port: 3000 });
 
 ```typescript
 const inspekt = new Inspekt({
-    apiKey: 'ins_live_your_key_here', // Required
+    apiKey: 'your_key_here', // Required
     analysisMode: 'errors',           // Optional — default: 'errors'
     redactKeys: ['x-internal-token'], // Optional — keys to redact
     terminalOutput: true,             // Optional — default: true

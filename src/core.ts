@@ -164,10 +164,6 @@ class Inspekt {
                 // Set the search param
                 inspektApiUrl.searchParams.set("analysisMode", this.options.analysisMode)
 
-                // TODO: REMOVE THIS LINE OF CODE BECAUSE THE AI_ANALYSIS SEARCH PARAM
-                // TODO[CONTINUED]: WILL BE DEPRECIATED
-                inspektApiUrl.searchParams.set("ai_analysis", "true");
-
                 // Make a request to inspekt's api
                 const response = await axios.post(inspektApiUrl.toString(), {
                     url: data.url,

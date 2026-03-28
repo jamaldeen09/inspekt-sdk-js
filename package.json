@@ -1,6 +1,6 @@
 {
-  "name": "inspekt-js",
-  "version": "0.0.1",
+  "name": "@inspekt/js",
+  "version": "0.0.3",
   "description": "AI-powered API monitoring and diagnostics. Drop-in middleware for Express, NestJS, and Fastify that logs structured analysis directly to your terminal.",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -9,24 +9,36 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
       "import": "./dist/index.js"
     },
     "./express": {
       "types": "./dist/adapters/express.d.ts",
+      "require": "./dist/adapters/express.js",
       "import": "./dist/adapters/express.js"
     },
     "./fastify": {
       "types": "./dist/adapters/fastify.d.ts",
+      "require": "./dist/adapters/fastify.js",
       "import": "./dist/adapters/fastify.js"
+    },
+
+    "./nest": {
+      "types": "./dist/adapters/nest.d.ts",
+      "require": "./dist/adapters/nest.js",
+      "import": "./dist/adapters/nest.js"
     }
   },
   "files": [
     "dist",
-    "src"
+    "README.md"
   ],
   "homepage": "https://google.com",
   "repository": {
     "url": "https://github.com/jamaldeen09/inspekt-sdk-js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",
@@ -57,7 +69,6 @@
     "fastify": ">=4.0.0",
     "rxjs": "^7.0.0"
   },
-
   "devDependencies": {
     "@nestjs/common": "^11.1.17",
     "@types/express": "^5.0.6",
