@@ -10,9 +10,9 @@ const inspektExpress = (inspekt: Inspekt): RequestHandler => {
             capturedBody = body;
             return originalJson.call(this, body);
         };
+        console.log("radn")
 
-        res.on('finish', () => inspekt.backgroundAnalysis(req, res, capturedBody)
-            .catch((err) => console.error('[Inspekt] ExpressJS background analysis failed:', err)));
+        res.on('finish', () => inspekt.backgroundAnalysis(req, res, capturedBody));
         next();
     };
 };

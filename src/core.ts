@@ -4,8 +4,15 @@ export interface InspektOptions {
     /** The project API Key from your Inspekt Dashboard */
     apiKey: string;
 
-    // 
-    logs?: boolean;
+    /**
+     * Toggles the visual AI analysis cards in the terminal.
+     * * When true (default), Inspekt will print a structured, color-coded 
+     * diagnosis to the console. Set to false in environments where 
+     * you want silent monitoring or are piping logs to a third-party 
+     * logging service.
+     * * @default true
+     */
+    terminalOutput?: boolean;
 
     /** * Determines which responses trigger an AI analysis.
      * 'errors' (default): Only 4xx and 5xx.
@@ -16,9 +23,6 @@ export interface InspektOptions {
 
     /** List of sensitive keys to redact from headers and body before sending to AI */
     redactKeys?: string[];
-
-    /** The environment name (e.g., 'production', 'staging', 'local') */
-    env?: string;
 };
 
 
@@ -33,9 +37,8 @@ class Inspekt {
         // Set smart defaults so the user doesn't have to provide everything
         this.options = {
             analysisMode: options.analysisMode ?? 'errors',
-            redactKeys: ['authorization', 'cookie', 'set-cookie', ...(options.redactKeys ?? [])],
-            env: options.env ?? process.env.NODE_ENV ?? 'development',
-            logs: options.logs ?? true
+            redactKeys: ['authorization', ...(options.redactKeys ?? [])],
+            terminalOutput: options.terminalOutput ?? true
         };
     }
 
@@ -177,7 +180,8 @@ class Inspekt {
                         "x-api-key": this.apiKey,
                         "Content-Type": "application/json"
                     },
-                    // timeout: 5000 // Ensures we don't hang the process if the api is slow
+                    // timeout: 5000 // Ensures we don't hang the process if the api is slow 
+                    // TODO: Adjust this timer after getting the average response time of inspekt's api
                 });
 
                 return response;
@@ -224,7 +228,7 @@ class Inspekt {
         if (!response) return;
 
         // Successful AI processing
-        if (response.data && response.data?.data?.analysis) 
+        if ((response.data && response.data?.data?.analysis) && this.options.terminalOutput)
             this.logAnalysis(response.data?.data?.analysis, req);
 
         // Case where server received the request but skipped analysis (e.g., out of credits)

@@ -1,37 +1,71 @@
 {
   "name": "inspekt-sdk",
+  "version": "0.0.1",
+  "description": "AI-powered API monitoring and diagnostics. Drop-in middleware for Express, NestJS, and Fastify that logs structured analysis directly to your terminal.",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
-  "version": "0.0.1",
-  "description": "",
   "type": "module",
   "types": "./dist/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "dev": "tsx watch src/index.ts"
-  },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./express": {
+      "types": "./dist/adapters/express.d.ts",
+      "import": "./dist/adapters/express.js"
+    },
+    "./fastify": {
+      "types": "./dist/adapters/fastify.d.ts",
+      "import": "./dist/adapters/fastify.js"
     }
   },
-  "devDependencies": {
-    "@types/node": "^25.5.0",
-    "tsx": "^4.21.0",
-    "typescript": "^6.0.2"
+  "files": [
+    "dist",
+    "src"
+  ],
+  "homepage": "https://google.com",
+  "repository": {
+    "url": "https://github.com/jamaldeen09/inspekt-sdk-js"
   },
-  "keywords": [],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "monitoring",
+    "ai",
+    "diagnostics",
+    "express",
+    "nestjs",
+    "fastify",
+    "middleware",
+    "logging",
+    "api-audit",
+    "debugging"
+  ],
   "author": "jamaldeen.o",
   "license": "MIT",
   "dependencies": {
-    "@fastify/formbody": "^8.0.2",
-    "@nestjs/common": "^11.1.17",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
     "axios": "^1.14.0",
+    "fastify-plugin": "^5.1.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": ">=10.0.0",
+    "express": ">=4.0.0",
+    "fastify": ">=4.0.0",
+    "rxjs": "^7.0.0"
+  },
+
+  "devDependencies": {
+    "@nestjs/common": "^11.1.17",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
     "express": "^5.2.1",
     "fastify": "^5.8.4",
-    "rxjs": "^7.8.2"
+    "rxjs": "^7.8.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
   }
 }

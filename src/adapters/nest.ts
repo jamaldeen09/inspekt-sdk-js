@@ -27,17 +27,11 @@ class InspektInterceptor implements NestInterceptor {
             tap({
                 next: (body) => {
                     // This runs in the background AFTER the controller returns
-                    this.inspekt.backgroundAnalysis(request, response, body).catch(err => {
-                        // Ensure SDK errors don't crash the host NestJS app
-                        console.error('[Inspekt] NestJS background analysis failed:', err);
-                    });
+                    this.inspekt.backgroundAnalysis(request, response, body)
                 },
                 error: (err) => {
                     // Captures unhandled exceptions in the controller
-                    this.inspekt.backgroundAnalysis(request, response, err).catch(err => {
-                        // Ensure SDK errors don't crash the host NestJS app
-                        console.error('[Inspekt] NestJS background analysis failed:', err);
-                    });
+                    this.inspekt.backgroundAnalysis(request, response, err)
                 },
             }),
         );

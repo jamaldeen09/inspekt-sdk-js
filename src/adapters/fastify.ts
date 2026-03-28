@@ -9,11 +9,8 @@ const inspektFastify = (inspekt: Inspekt): FastifyPluginCallback => {
             return payload;
         });
 
-        fastify.addHook("onResponse", async (request, reply) => {
-            console.log("Received a new response!");
-            await inspekt.backgroundAnalysis(request, reply, (request as any)._inspektBody)
-                .catch((err) => console.error('[Inspekt] Fastify background analysis failed:', err));
-        });
+        fastify.addHook("onResponse", async (request, reply) => 
+            await inspekt.backgroundAnalysis(request, reply, (request as any)._inspektBody));
 
         done();
     });
