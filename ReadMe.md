@@ -1,6 +1,6 @@
 # inspekt-sdk-js
 
-Official JavaScript/TypeScript SDK for [Inspekt](LINK_COMING_SOON) — drop-in middleware that silently monitors your API responses and surfaces AI-powered diagnostics directly in your terminal.
+Official JavaScript/TypeScript SDK for [Inspekt](LINK_COMING_SOON) drop-in middleware that silently monitors your API responses and surfaces AI-powered diagnostics directly in your terminal.
 
 No dashboards to open. No manual debugging. Just run your server and Inspekt tells you what's wrong and why.
 
